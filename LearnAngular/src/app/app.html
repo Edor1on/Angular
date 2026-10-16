@@ -1,0 +1,15 @@
+<app-header title="Hello world!"></app-header>
+
+<h1>Users:</h1>
+
+<ul>
+  @for (note of notes(); track note.id) {
+    <li>
+      <strong>{{ note.title }}</strong>
+      {{ note.content }}
+      <small>{{ note.createdAt | date: 'short' }}</small>
+    </li>
+  }
+</ul>
+
+<app-footer (subscribeClicked)="handleSubscribe()">  </app-footer>
