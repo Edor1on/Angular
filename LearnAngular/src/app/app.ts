@@ -5,6 +5,7 @@ import { Note } from './models/note.model';
 import { Header } from './header/header';
 import { Footer } from './footer/footer';
 import { FormsModule } from '@angular/forms';
+import { NoteService } from './sevices/note';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './app.css'
 })
 export class App {
+  constructor(private noteService: NoteService) {}
+
   handleSubscribe() {
     console.log("QWERTY");
   }
@@ -23,11 +26,10 @@ export class App {
   }
 
   title = "Hello My First website";
-  
-  protected readonly notes = signal<Note[]>([
-    { id: 1, title: "Adrian", content: "19 year", createdAt: new Date() },
-    { id: 2, title: "Yura", content: "19 year", createdAt: new Date() }
-  ]);
+
+  protected get notes(){
+    return this.noteService.getNotes();
+  }
 
   // Зробили звичайним об'єктом, щоб ngModel міг записувати туди дані
   protected newNote: Partial<Note> = {
@@ -36,19 +38,12 @@ export class App {
   };
 
   protected addNote() {
-    // ВИПРАВЛЕНО логіку: якщо немає title АБО немає content
-    if(!this.newNote.title || !this.newNote.content){
+    // Звертаємося напряму до this.newNote без круглих дужок
+    if (!this.newNote.title || !this.newNote.content) {
       return; 
     }
 
-    const noteToAdd: Note = {
-      id: Date.now(),
-      title: this.newNote.title,
-      content: this.newNote.content,
-      createdAt: new Date()
-    };
-
-    this.notes.update(notes => [...notes, noteToAdd]);
+    this.noteService.addNote(this.newNote.title, this.newNote.content);
 
     // Очищаємо форму
     this.newNote = {
