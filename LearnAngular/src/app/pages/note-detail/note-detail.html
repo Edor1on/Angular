@@ -1,0 +1,13 @@
+<h2>Детали заметки</h2>
+
+@if (note) {
+  <p>
+    <strong>{{ note.title }}</strong>
+    {{ note.content }}
+    <em>{{ note.createdAt | date }}</em>
+  </p>
+} @else {
+  <p>
+    Заметки нет
+  </p>
+}

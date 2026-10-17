@@ -1,0 +1,15 @@
+<h1 (click)="showAlert()" (mouseover)="showAlert()">Users:</h1>
+
+<ul>
+  @for (note of notes(); track note.id) {
+    <li>
+      <strong [routerLink]="['/note', note.id]">{{ note.title }}</strong>
+    </li>
+  }
+</ul>
+
+<h2>
+  <input type="text" [(ngModel)]="newNote.title" placeholder="Header">
+  <textarea [(ngModel)]="newNote.content" placeholder="Some Text"></textarea>
+  <button (click)="addNote()">Добавить</button>
+</h2>
