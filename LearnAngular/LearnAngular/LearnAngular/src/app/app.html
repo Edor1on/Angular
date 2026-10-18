@@ -1,0 +1,22 @@
+<app-header [title]="title"></app-header>
+
+<h1 (click)="showAlert()" (mouseover)="showAlert()">Users:</h1>
+
+<ul>
+  @for (note of notes(); track note.id) {
+    <li>
+      <strong>{{ note.title }}</strong>
+      {{ note.content }}
+      <small>{{ note.createdAt | date: 'short' }}</small>
+    </li>
+  }
+</ul>
+
+<h2>
+  <!-- ВИПРАВЛЕНО синтаксис на [(ngModel)] та прибрано виклики функцій -->
+  <input type="text" [(ngModel)]="newNote.title" placeholder="Header">
+  <textarea [(ngModel)]="newNote.content" placeholder="Some Text"></textarea>
+  <button (click)="addNote()">Добавить</button>
+</h2>
+
+<app-footer (subscribeClicked)="handleSubscribe()"></app-footer>

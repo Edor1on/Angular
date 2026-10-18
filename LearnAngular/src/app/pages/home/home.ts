@@ -1,13 +1,12 @@
-import { Component, signal } from '@angular/core';
-import { Note } from '../../models/note.model';
+import { Component } from '@angular/core';
 import { NoteService } from '../../sevices/note';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NoteAdd } from '../../components/note-add/note-add';
 
 @Component({
   selector: 'app-home',
-  imports: [FormsModule, CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NoteAdd],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -20,23 +19,5 @@ export class Home {
 
   protected get notes(){
     return this.noteService.getNotes();
-  }
-
-  protected newNote: Partial<Note> = {
-    title: '',
-    content: ''
-  };
-
-  protected addNote() {
-    if (!this.newNote.title || !this.newNote.content) {
-      return; 
-    }
-
-    this.noteService.addNote(this.newNote.title, this.newNote.content);
-
-    this.newNote = {
-      title: "",
-      content: ""
-    };
   }
 }

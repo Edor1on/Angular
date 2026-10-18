@@ -1,0 +1,44 @@
+<form #noteForm="ngForm" (ngSubmit)="addNote(noteForm)">
+  <h2>
+    <input 
+      type="text" 
+      name="title"
+      [(ngModel)]="newNote.title" 
+      placeholder="Header"
+      required
+      #titleRef="ngModel"
+    >
+    @if (submitted && titleRef.invalid) {
+      <div style="color: red; font-size: 14px;">
+        @if (titleRef.errors?.['required']) {
+          <small>Заголовок обязателен</small>
+        }
+      </div>
+    }
+  </h2>
+
+  <div>
+    <label>Содержимое</label><br>
+    <textarea
+      name="content"
+      [(ngModel)]="newNote.content"
+      placeholder="Текст"
+      required
+      minlength="5"
+      #contentRef="ngModel"
+    ></textarea><br>
+
+    @if (submitted && contentRef.invalid) {
+      <div style="color: red">
+        @if (contentRef.errors?.['required']) {
+          <small>Содержимое обязательно</small>
+        }
+        @if (contentRef.errors?.['minlength']) {
+          <small>Содержимое минимум 5 символов</small>
+        }
+      </div>
+    }
+  </div>
+
+  <button type="submit">Добавить</button>
+</form>
